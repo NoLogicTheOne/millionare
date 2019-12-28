@@ -7,8 +7,10 @@ import './App.css';
 
 function App() {
   let [questionSet, setQuestion] = useState(Codexes.getQuestion())
-  
+  let [invert, setInvert] = useState(true)
+
   function next(){
+    setInvert(Math.random() > 0.5)
     setQuestion(Codexes.getQuestion())
   }
 
@@ -17,7 +19,7 @@ function App() {
       <header className="App-header">
         <h2>Попробуй ответить на вопросы!!</h2>  
       </header>
-      <Question next={next} {...questionSet}/>
+      <Question next={next} invert={invert} {...questionSet}/>
 
     </div>
   );

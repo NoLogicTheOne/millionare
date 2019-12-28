@@ -3,8 +3,7 @@ import { Variant } from './variant';
 
 import "./question.css"
 
-export function Question({vars, rightVariant, rightIdx, next}) {
-    let invert = true
+export function Question({invert, vars, rightVariant, rightIdx, next}) {
     let variants = vars
     let rightArticle = "Статья " + rightVariant.articleNum
     let rightText = rightVariant.articleText
@@ -24,12 +23,10 @@ export function Question({vars, rightVariant, rightIdx, next}) {
         cleanAll()
         setAnswered(false)
         setReadyToAnswer(false)
-        invert = Math.random > 0.5
         next()
     }
 
     const handleCheck = (e) => {
-        e.preventDefault()
         if(selected == -1) return
         
         if(answered) {
@@ -68,6 +65,13 @@ export function Question({vars, rightVariant, rightIdx, next}) {
     }
 
     const onVariantClick = (idx) => () => {
+        if(readyToAnswer && (selected == idx)){
+            handleCheck()
+            return
+        }
+        if(answered){
+            return
+        }
         cleanAll()
         setSelected(idx)
         setReadyToAnswer(true)
