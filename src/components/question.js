@@ -4,45 +4,52 @@ import { Variant } from './variant';
 import "./question.css"
 
 export function Question({vars, rightVariant, rightIdx, next}) {
-    let invert = Math.random() > 0.5 
+    let invert = true
     let variants = vars
     let rightArticle = "Статья " + rightVariant.articleNum
     let rightText = rightVariant.articleText
-    let [answered, setAnswered] = useState(false)
+    let colorsMask = {
+        1: "transparent",
+        2: "transparent",
+        3: "transparent",
+        4: "transparent"
+    }
 
+    let [selected, setSelected] = useState(-1)
+    let [readyToAnswer, setReadyToAnswer] = useState(false)
+    let [answered, setAnswered] = useState(false)
+    let [colors, setColors] = useState(colorsMask)
+    
     const nextQuestion = () => {
         for(let i = 0; i < 4; i++){
-            marker(i, "transparent")
+            marker(i)
         }
-        next()
         setAnswered(false)
+        invert = Math.random > 0.5
+        next()
     }
 
     const handleSubmit = (e) => {
         e.preventDefault()
+        if(selected == -1) return
+        
         if(answered) {
+            setAnswered(false)
             nextQuestion()
         } 
-        let selectedIdx = getSelected()
-        if(selectedIdx == -1) return
-        
-        setAnswered(true)
-        if(selectedIdx == rightIdx){
+
+        if(selected == rightIdx){
             handleWin()
         } else {
-            handleLose(selectedIdx)
+            handleLose(selected)
         }
+        setReadyToAnswer(false)
+        setAnswered(true)
     }
 
     const marker = (idx, color) => {
-        let index =  "label_answer" + idx
-        let elem = document.getElementById(index)
-        if(color){
-            elem.style.backgroundColor = color
-        } else {
-            delete elem.backgroundColor
-        }
-        
+        colorsMask[idx] = color
+        setColors(colorsMask)
     }
 
     const handleLose = (selectedIdx) => {
@@ -54,17 +61,9 @@ export function Question({vars, rightVariant, rightIdx, next}) {
         marker(rightIdx, "green")
     }
 
-
-    const getSelected = () => {
-        let group = document.getElementsByName("answer")
-
-        for(let i = 0, len = group.length; i < len; i++){
-            if(group[i].checked){
-                return i
-            }
-        }
-
-        return -1
+    const onVariantClick = (idx) => () => {
+        setSelected(idx)
+        setReadyToAnswer(true)
     }
 
     return (<>
@@ -77,12 +76,15 @@ export function Question({vars, rightVariant, rightIdx, next}) {
                 return (<Variant 
                     key={idx}
                     idx={idx}
-                    invert={invert} 
+                    color={colors[idx]}
+                    checked={selected==idx}
+                    handleClick={onVariantClick(idx)}
+                    invert={invert}
                     variant={variant}/>)
             })
         }
         {
-            answered
+            readyToAnswer
                 ? <input type="submit" value="Готов ответить"/>
                 : <input type="submit" value="Следующий вопрос"/>
         }
