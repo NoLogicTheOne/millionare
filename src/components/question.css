@@ -19,14 +19,3 @@ input[type="submit"]{
     cursor: pointer;
 }
 
-.millionare__variant:checked{
-    background-color: yellow;
-}
-
-.millionare__input{
-    display: none;
-}
-
-.millionare__input:checked + .millionare__variant{
-    background-color: yellow;
-}

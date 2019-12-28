@@ -8,28 +8,27 @@ export function Question({vars, rightVariant, rightIdx, next}) {
     let variants = vars
     let rightArticle = "Статья " + rightVariant.articleNum
     let rightText = rightVariant.articleText
-    let colorsMask = {
+    let defaultColors = {
+        0: "transparent",
         1: "transparent",
         2: "transparent",
-        3: "transparent",
-        4: "transparent"
+        3: "transparent"
     }
 
     let [selected, setSelected] = useState(-1)
     let [readyToAnswer, setReadyToAnswer] = useState(false)
     let [answered, setAnswered] = useState(false)
-    let [colors, setColors] = useState(colorsMask)
+    let [colors, setColors] = useState(defaultColors)
     
     const nextQuestion = () => {
-        for(let i = 0; i < 4; i++){
-            marker(i)
-        }
+        cleanAll()
         setAnswered(false)
+        setReadyToAnswer(false)
         invert = Math.random > 0.5
         next()
     }
 
-    const handleSubmit = (e) => {
+    const handleCheck = (e) => {
         e.preventDefault()
         if(selected == -1) return
         
@@ -47,9 +46,16 @@ export function Question({vars, rightVariant, rightIdx, next}) {
         setAnswered(true)
     }
 
-    const marker = (idx, color) => {
-        colorsMask[idx] = color
-        setColors(colorsMask)
+    const marker = (idx, color="transparent") => {
+        let newMask = colors
+        newMask[idx] = color
+        setColors(newMask)
+    }
+
+    function cleanAll() {
+        for(let i = 0; i < 4; i++){
+            marker(i)
+        }
     }
 
     const handleLose = (selectedIdx) => {
@@ -62,15 +68,16 @@ export function Question({vars, rightVariant, rightIdx, next}) {
     }
 
     const onVariantClick = (idx) => () => {
+        cleanAll()
         setSelected(idx)
         setReadyToAnswer(true)
+        marker(idx, "yellow")
     }
 
     return (<>
         <h3>
             {invert ? rightArticle : rightText}
         </h3>
-        <form action="#" onSubmit={handleSubmit}>
         {
             variants.map((variant, idx) => {
                 return (<Variant 
@@ -85,9 +92,8 @@ export function Question({vars, rightVariant, rightIdx, next}) {
         }
         {
             readyToAnswer
-                ? <input type="submit" value="Готов ответить"/>
-                : <input type="submit" value="Следующий вопрос"/>
+                ? <button onClick={handleCheck}>Готов ответить</button>
+                : <button onClick={nextQuestion}>Следующий вопрос</button>
         }
-        </form>
     </>)
 }
