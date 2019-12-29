@@ -19,12 +19,14 @@ export function Question({invert, vars, rightVariant, rightIdx, next, articleNum
     let [answered, setAnswered] = useState(false)
     let [colors, setColors] = useState(defaultColors)
     let [showed, setShowed] = useState(false)
+    let [win, setWin] = useState(false)
     
     const nextQuestion = () => {
         cleanAll()
         setAnswered(false)
         setReadyToAnswer(false)
-        next()
+        setShowed(false)
+        next(win)
     }
 
     const handleCheck = (e) => {
@@ -64,6 +66,7 @@ export function Question({invert, vars, rightVariant, rightIdx, next, articleNum
     
     const handleWin = () => {
         marker(rightIdx, "green")
+        setWin(true)
     }
 
     const onVariantClick = (idx) => () => {
