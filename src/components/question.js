@@ -3,7 +3,7 @@ import { Variant } from './variant';
 
 import "./question.css"
 
-export function Question({invert, vars, rightVariant, rightIdx, next}) {
+export function Question({invert, vars, rightVariant, rightIdx, next, articleNum, articleText}) {
     let variants = vars
     let rightArticle = "Статья " + rightVariant.articleNum
     let rightText = rightVariant.articleText
@@ -18,6 +18,7 @@ export function Question({invert, vars, rightVariant, rightIdx, next}) {
     let [readyToAnswer, setReadyToAnswer] = useState(false)
     let [answered, setAnswered] = useState(false)
     let [colors, setColors] = useState(defaultColors)
+    let [showed, setShowed] = useState(false)
     
     const nextQuestion = () => {
         cleanAll()
@@ -39,6 +40,7 @@ export function Question({invert, vars, rightVariant, rightIdx, next}) {
         } else {
             handleLose(selected)
         }
+        setShowed(true)
         setReadyToAnswer(false)
         setAnswered(true)
     }
@@ -91,6 +93,7 @@ export function Question({invert, vars, rightVariant, rightIdx, next}) {
                     checked={selected==idx}
                     handleClick={onVariantClick(idx)}
                     invert={invert}
+                    showed={showed}
                     variant={variant}/>)
             })
         }
