@@ -24,13 +24,13 @@ need to bind to a codex interface
   }
 */
 
-export function getQuestion(Codex) {
+export function getQuestion(names) {
     let result = {
       vars: []
     }
 
-    const getRandomCodex = () => {
-        let keys = Object.keys(this)
+    const getRandomCodex = names => {
+        let keys = names || Object.keys(this)
         keys = keys.filter(c => typeof this[c] !== "function")
         let len = keys.length
         let randomIdx = (Math.random() * len) | 0
@@ -38,9 +38,7 @@ export function getQuestion(Codex) {
         return keys[randomIdx]
     }
 
-    const getArticle = (idx) => Codex 
-        ? this[Codex].getRandomArticle(idx)
-        : this[getRandomCodex()].getRandomArticle(idx)
+    const getArticle = (idx) => this[getRandomCodex(names)].getRandomArticle(idx)
 
     const getVariant = ({idx: articleNum, article: articleText}, isRight) => ({
         articleNum,
@@ -59,8 +57,6 @@ export function getQuestion(Codex) {
       if(i == rightVariant) continue
       result.vars[i] = getVariant(getArticle())
     }
-
-    console.log(result)
 
     // result.rightVariant = rightVariant
 
