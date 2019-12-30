@@ -60,6 +60,8 @@ export function getQuestion(Codex) {
       result.vars[i] = getVariant(getArticle())
     }
 
+    console.log(result)
+
     // result.rightVariant = rightVariant
 
     return result

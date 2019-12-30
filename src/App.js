@@ -21,7 +21,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h2>Попробуй ответить на вопросы!!</h2>  
+        <h2>Появился УК РФ</h2>  
       </header>
       <section>
         <h3>Текущий счет: {wins} - {count - wins}</h3>
