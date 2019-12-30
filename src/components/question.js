@@ -36,7 +36,7 @@ export function Question({invert, vars, rightVariant, rightIdx, next, articleNum
             setAnswered(false)
             nextQuestion()
         } 
-
+        setWin(false)
         if(selected == rightIdx){
             handleWin()
         } else {

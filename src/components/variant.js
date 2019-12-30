@@ -10,7 +10,8 @@ export const Variant = ({variant, invert, color, idx, showed, handleClick}) => {
         <div className="millionare__variant" 
             id={answerIdx}
             style={{"backgroundColor": color}}
-            onClick={handleClick}>
+            onClick={handleClick}
+            onDoubleClick={e=>{e.preventDefault()}}>
 
             {invert 
                 ? text + (show ? (" ( " + num + " )") : "") 
