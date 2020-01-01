@@ -12,7 +12,8 @@ function App() {
   let [invert, setInvert] = useState(true)
   let [count, setCount] = useState(0)
   let [wins, setWins] = useState(0)
-  let [names, setNames] = useState(undefined)
+  let [names, setNames] = useState(new Set())
+  let [modalOpen, setModalOpen] = useState(true)
 
   function next(isWin = true){
     if(isWin) setWins(wins + 1)    
@@ -23,28 +24,40 @@ function App() {
 
   function handleSubmit(e) {
     e.preventDefault()
+    setModalOpen(false)
 
   }
 
   function getCodexesCheckboxes() {
-    console.log(Codexes)
     let keys = Object.keys(Codexes)
     keys = keys.filter(c => typeof Codexes[c] !== "function")
-    let len = keys.length
+  
     return keys.map(c => (<>
-      <Checkbox key={new Date()} label={Codexes[c].header}/>
+      <Checkbox 
+        key={new Date()} 
+        label={Codexes[c].header}
+        onClick={e => {
+          let n = names
+          if(names.has(c)){
+            n.delete(c)
+            setNames(n)
+          } else {
+            n.add(c)
+            setNames(n)
+          }
+        }}/>
       <br/>
     </>))
   }
 
   const ModalWithSetting = () => (
-    <Modal trigger={<Icon name="settings" size="big"/>} closeIcon>
-      <Header icon='archive' content='Archive Old Messages' />
+    <Modal open={modalOpen}>
+      <Header icon='archive' content='Настройте выдачу вопросов' />
       <Modal.Content>
         {getCodexesCheckboxes()}
       </Modal.Content>
       <Modal.Actions>
-        <Button color='red' onClick={e=>e}>
+        <Button color='red' onClick={e => setModalOpen(false)}>
           <Icon name='remove' /> Отмена
         </Button>
         <Button color='green' onClick={handleSubmit}>
@@ -59,6 +72,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h2>Появился УК РФ</h2> 
+        <Icon name="settings" size="big" onClick={e => setModalOpen(true)}/> 
         {ModalWithSetting()}
       </header>
       <section>
