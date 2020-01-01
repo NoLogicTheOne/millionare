@@ -14,18 +14,18 @@ function App() {
   let [wins, setWins] = useState(0)
   let [names, setNames] = useState(new Set())
   let [modalOpen, setModalOpen] = useState(true)
+  let previousNames = new Set()
 
   function next(isWin = true){
+    let throwingNames = names.size ? names : []
     if(isWin) setWins(wins + 1)    
     setCount(count + 1)
-    setQuestion(Codexes.getQuestion(names))
+    setQuestion(Codexes.getQuestion([...throwingNames]))
     setInvert(Math.random() > 0.5)
   }
 
   function handleSubmit(e) {
-    e.preventDefault()
     setModalOpen(false)
-
   }
 
   function getCodexesCheckboxes() {
@@ -51,13 +51,16 @@ function App() {
   }
 
   const ModalWithSetting = () => (
-    <Modal open={modalOpen}>
+    <Modal key={new Date()} open={modalOpen}>
       <Header icon='archive' content='Настройте выдачу вопросов' />
       <Modal.Content>
         {getCodexesCheckboxes()}
       </Modal.Content>
       <Modal.Actions>
-        <Button color='red' onClick={e => setModalOpen(false)}>
+        <Button color='red' onClick={e => {
+          setModalOpen(false)
+          setNames(previousNames)
+        }}>
           <Icon name='remove' /> Отмена
         </Button>
         <Button color='green' onClick={handleSubmit}>
@@ -72,7 +75,10 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h2>Появился УК РФ</h2> 
-        <Icon name="settings" size="big" onClick={e => setModalOpen(true)}/> 
+        <Icon name="settings" size="big" onClick={e => {
+          setModalOpen(true)
+          previousNames = names
+        }}/> 
         {ModalWithSetting()}
       </header>
       <section>

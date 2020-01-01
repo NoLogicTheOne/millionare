@@ -30,14 +30,14 @@ export function Question({invert, vars, rightVariant, rightIdx, next, articleNum
     }
 
     const handleCheck = (e) => {
-        if(selected == -1) return
+        if(selected === -1) return
         
         if(answered) {
             setAnswered(false)
             nextQuestion()
         } 
         setWin(false)
-        if(selected == rightIdx){
+        if(selected === rightIdx){
             handleWin()
         } else {
             handleLose(selected)
@@ -70,7 +70,7 @@ export function Question({invert, vars, rightVariant, rightIdx, next, articleNum
     }
 
     const onVariantClick = (idx) => () => {
-        if(readyToAnswer && (selected == idx)){
+        if(readyToAnswer && (selected === idx)){
             handleCheck()
             return
         }
@@ -93,7 +93,7 @@ export function Question({invert, vars, rightVariant, rightIdx, next, articleNum
                     key={idx}
                     idx={idx}
                     color={colors[idx]}
-                    checked={selected==idx}
+                    checked={selected === idx}
                     handleClick={onVariantClick(idx)}
                     invert={invert}
                     showed={showed}
