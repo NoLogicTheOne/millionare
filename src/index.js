@@ -7,7 +7,7 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-import reducer from "./reducers"
+import {default as reducer} from "./reducers"
 const store = createStore(reducer)
 
 ReactDOM.render(<Provider store={store}>

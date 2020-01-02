@@ -94,7 +94,7 @@ function App(props) {
   );
 }
 
-const MSTP = state => state
+const MSTP = state => state["main"]
 
 const MDTP = dispatch => ({
   refreshInvert: () => dispatch(AC.refreshInvert()),

@@ -1,9 +1,7 @@
 const initialState = {
     "count_wins": 0,
     "count_loose": 0,
-    "question": "Нет вопроса",
     "invert": true,
-    "vars": {},
     "names": []
 }
 
