@@ -12,16 +12,17 @@ import './App.css';
 function App(props) {
   // Iknow about destructurisation
   let {invert, refreshInvert} = props
+  let { count_wins, count_loose, addCount } = props
+
   let [questionSet, setQuestion] = useState(Codexes.getQuestion())
   let [count, setCount] = useState(0)
-  let [wins, setWins] = useState(0)
   let [names, setNames] = useState(new Set())
   let [modalOpen, setModalOpen] = useState(true)
   let previousNames = new Set()
 
   function next(isWin = true){
     let throwingNames = names.size ? names : []
-    if(isWin) setWins(wins + 1)    
+    addCount(isWin)
     setCount(count + 1)
     setQuestion(Codexes.getQuestion([...throwingNames]))
     refreshInvert()
@@ -85,7 +86,7 @@ function App(props) {
         {ModalWithSetting()}
       </header>
       <section>
-        <h3>Текущий счет: {wins} - {count - wins}</h3>
+        <h3>Текущий счет: {count_wins} - {count_loose}</h3>
       </section>
       <Question next={next} invert={invert} {...questionSet}/>
 
@@ -93,12 +94,11 @@ function App(props) {
   );
 }
 
-const MSTP = state => ({
-  invert: state.invert
-})
+const MSTP = state => state
 
 const MDTP = dispatch => ({
-  refreshInvert: () => dispatch(AC.refreshInvert)
+  refreshInvert: () => dispatch(AC.refreshInvert()),
+  addCount: isWin => dispatch(AC.addCount())
 })
 
 export default connect(MSTP, MDTP)(App);

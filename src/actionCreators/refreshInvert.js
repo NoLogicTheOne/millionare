@@ -1,3 +1,3 @@
-export default {
+export default () => ({
     type: "REFRESH_INVERT"
-}
+})
