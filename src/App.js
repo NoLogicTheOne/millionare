@@ -1,15 +1,18 @@
 import React, {useState} from 'react'
 import { Icon, Modal, Header, Button, Checkbox } from 'semantic-ui-react'
+import { connect } from "react-redux"
 
 import { Codexes } from './middleware' 
 import { Question } from "./components/question"
+import {default as AC} from "./actionCreators"
 
 import 'semantic-ui-css/semantic.min.css';
 import './App.css';
 
-function App() {
+function App(props) {
+  // Iknow about destructurisation
+  let {invert, refreshInvert} = props
   let [questionSet, setQuestion] = useState(Codexes.getQuestion())
-  let [invert, setInvert] = useState(true)
   let [count, setCount] = useState(0)
   let [wins, setWins] = useState(0)
   let [names, setNames] = useState(new Set())
@@ -21,7 +24,7 @@ function App() {
     if(isWin) setWins(wins + 1)    
     setCount(count + 1)
     setQuestion(Codexes.getQuestion([...throwingNames]))
-    setInvert(Math.random() > 0.5)
+    refreshInvert()
   }
 
   function handleSubmit(e) {
@@ -50,8 +53,8 @@ function App() {
     </>))
   }
 
-  const ModalWithSetting = () => (
-    <Modal key={new Date()} open={modalOpen}>
+  const ModalWithSetting = (modalOpen) => (
+    <Modal open={modalOpen}>
       <Header icon='archive' content='Настройте выдачу вопросов' />
       <Modal.Content>
         {getCodexesCheckboxes()}
@@ -90,4 +93,12 @@ function App() {
   );
 }
 
-export default App;
+const MSTP = state => ({
+  invert: state.invert
+})
+
+const MDTP = dispatch => ({
+  refreshInvert: () => dispatch(AC.refreshInvert)
+})
+
+export default connect(MSTP, MDTP)(App);
