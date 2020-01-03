@@ -1,17 +1,18 @@
 import React, {useState} from 'react'
-import { Icon, Modal, Header, Button, Checkbox } from 'semantic-ui-react'
+import { Icon } from 'semantic-ui-react'
 import { connect } from "react-redux"
 
 import { Codexes } from './middleware' 
 import { Question } from "./components/question"
 import {default as AC} from "./actionCreators"
+import { default as ModalSetting } from './components/ModalSetting'
 
 import 'semantic-ui-css/semantic.min.css';
 import './App.css';
 
 function App(props) {
-  // Iknow about destructurisation
-  let {invert, refreshInvert} = props
+  // I know about destructurisation
+  let { invert, refreshInvert } = props
   let { count_wins, count_loose, addCount } = props
 
   let [questionSet, setQuestion] = useState(Codexes.getQuestion())
@@ -32,58 +33,11 @@ function App(props) {
     setModalOpen(false)
   }
 
-  function getCodexesCheckboxes() {
-    let keys = Object.keys(Codexes)
-    keys = keys.filter(c => typeof Codexes[c] !== "function")
-  
-    return keys.map(c => (<>
-      <Checkbox 
-        key={new Date()} 
-        label={Codexes[c].header}
-        onClick={e => {
-          let n = names
-          if(names.has(c)){
-            n.delete(c)
-            setNames(n)
-          } else {
-            n.add(c)
-            setNames(n)
-          }
-        }}/>
-      <br/>
-    </>))
-  }
-
-  const ModalWithSetting = (modalOpen) => (
-    <Modal open={modalOpen}>
-      <Header icon='archive' content='Настройте выдачу вопросов' />
-      <Modal.Content>
-        {getCodexesCheckboxes()}
-      </Modal.Content>
-      <Modal.Actions>
-        <Button color='red' onClick={e => {
-          setModalOpen(false)
-          setNames(previousNames)
-        }}>
-          <Icon name='remove' /> Отмена
-        </Button>
-        <Button color='green' onClick={handleSubmit}>
-          <Icon name='checkmark' /> Сохранить
-        </Button>
-      </Modal.Actions>
-    </Modal>
-  )
-
-
   return (
     <div className="App">
       <header className="App-header">
         <h2>Появился УК РФ</h2> 
-        <Icon name="settings" size="big" onClick={e => {
-          setModalOpen(true)
-          previousNames = names
-        }}/> 
-        {ModalWithSetting()}
+        <ModalSetting />
       </header>
       <section>
         <h3>Текущий счет: {count_wins} - {count_loose}</h3>
@@ -98,7 +52,7 @@ const MSTP = state => state["main"]
 
 const MDTP = dispatch => ({
   refreshInvert: () => dispatch(AC.refreshInvert()),
-  addCount: isWin => dispatch(AC.addCount())
+  addCount: isWin => dispatch(AC.addCount(isWin))
 })
 
 export default connect(MSTP, MDTP)(App);
