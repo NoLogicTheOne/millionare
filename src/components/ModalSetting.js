@@ -8,17 +8,22 @@ import { default as AC } from "../actionCreators"
 import { Codexes } from '../middleware'
 
 function ModalSetting(props) {
-    let { names, modalOpen } = props
+    let { fullNames, names, modalOpen } = props
     let { modalToggle, addName, deleteName } = props
     
     const getCodexesCheckboxes = () => {
       
-        return [...names].map(c => (<>
+        return fullNames.map(c => (<>
           <Checkbox 
             key={new Date()} 
             label={Codexes[c].header}
             onClick={e => {
-                console.log(e)
+              if(names.has(c)){
+                deleteName(c)
+              } else {
+                addName(c)
+              }
+              console.log(names)
             }}/>
           <br/>
         </>))
@@ -41,8 +46,8 @@ const MSTP = state => state.settings
 
 const MDTP = dispatch => ({
     modalToggle: () => dispatch(AC.modalToggle()),
-    addName: name => dispatch(AC.addName()),
-    deleteName: name => dispatch(AC.deleteName())
+    addName: name => dispatch(AC.addName(name)),
+    deleteName: name => dispatch(AC.deleteName(name))
 })
 
 export default connect(MSTP, MDTP)(ModalSetting)

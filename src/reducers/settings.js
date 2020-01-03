@@ -1,6 +1,7 @@
 const initialState = {
     modalOpen: true,
-    names: new Set(["UK", "UPK"])
+    names: new Set([]),
+    fullNames: ["UK", "UPK"]
 }
 
 export default (state = initialState, action) => {
@@ -15,6 +16,7 @@ export default (state = initialState, action) => {
             }
         case "DELETE_NAME":
             names.delete(name)
+            console.log("reducerName - ", name)
             return{
                 ...state,
                 names
