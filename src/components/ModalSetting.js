@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { Icon, Modal, Header, Button, Checkbox } from 'semantic-ui-react'
 
@@ -13,17 +13,16 @@ function ModalSetting(props) {
     
     const getCodexesCheckboxes = () => {
       
-        return fullNames.map(c => (<>
+        return fullNames.map(currentName => (<>
           <Checkbox 
             key={new Date()} 
-            label={Codexes[c].header}
+            label={Codexes[currentName].header}
             onClick={e => {
-              if(names.has(c)){
-                deleteName(c)
+              if(names.has(currentName)){
+                deleteName(currentName)
               } else {
-                addName(c)
+                addName(currentName)
               }
-              console.log(names)
             }}/>
           <br/>
         </>))

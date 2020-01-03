@@ -16,7 +16,6 @@ export default (state = initialState, action) => {
             }
         case "DELETE_NAME":
             names.delete(name)
-            console.log("reducerName - ", name)
             return{
                 ...state,
                 names
