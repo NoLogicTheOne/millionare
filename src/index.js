@@ -1,14 +1,20 @@
-import React, {useEffect, Component} from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux'
-import { createStore } from "redux"
+import { createStore, applyMiddleware } from "redux"
+import logger from 'redux-logger'
 
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 import {default as reducer} from "./reducers"
-const store = createStore(reducer)
+ 
+// Logger with default options
+const store = createStore(
+  reducer,
+  applyMiddleware(logger)
+)
 
 ReactDOM.render(<Provider store={store}>
         <App /> 

@@ -17,6 +17,7 @@ function ModalSetting(props) {
           <Checkbox 
             key={new Date()} 
             label={Codexes[currentName].header}
+            checked={names.has(currentName)}
             onClick={e => {
               if(names.has(currentName)){
                 deleteName(currentName)
