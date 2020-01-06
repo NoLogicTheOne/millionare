@@ -5,6 +5,7 @@ import {default as deleteName} from "./deleteName"
 import {default as modalToggle} from "./modalToggle"
 import {default as saveChangeNames} from "./saveChangeNames"
 import {default as cancelChangeNames} from "./cancelChangeNames"
+import {default as setQuestion} from "./setQuestion"
 
 export default {
     refreshInvert,
@@ -13,5 +14,6 @@ export default {
     deleteName,
     modalToggle,
     saveChangeNames,
-    cancelChangeNames
+    cancelChangeNames,
+    setQuestion
 }

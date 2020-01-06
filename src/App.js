@@ -2,8 +2,7 @@ import React, {useState} from 'react'
 import { Icon } from 'semantic-ui-react'
 import { connect } from "react-redux"
 
-import { Codexes } from './middleware' 
-import { Question } from "./components/question"
+import Question from "./components/question"
 import { default as AC} from "./actionCreators"
 import { default as ModalSetting } from './components/ModalSetting'
 
@@ -15,18 +14,7 @@ function App(props) {
   let { invert, refreshInvert } = props
   let { count_wins, count_loose, addCount } = props
   let { modalToggle } = props
-  let { names } = props 
-
-  let [questionSet, setQuestion] = useState(Codexes.getQuestion())
-  let [count, setCount] = useState(0)
-
-  function next(isWin = true){
-    let throwingNames = names.size ? names : []
-    addCount(isWin)
-    setCount(count + 1)
-    setQuestion(Codexes.getQuestion([...throwingNames]))
-    refreshInvert()
-  }
+  let { names, setQuestion } = props 
 
   return (
     <div className="App">
@@ -38,7 +26,7 @@ function App(props) {
       <section>
         <h3>Текущий счет: {count_wins} - {count_loose}</h3>
       </section>
-      <Question next={next} invert={invert} {...questionSet}/>
+      <Question invert={invert}/>
 
     </div>
   );
@@ -50,9 +38,11 @@ const MSTP = state => ({
 }) 
 
 const MDTP = dispatch => ({
-  refreshInvert: () => dispatch(AC.refreshInvert()),
-  addCount: isWin => dispatch(AC.addCount(isWin)),
-  modalToggle: () => dispatch(AC.modalToggle())
+  modalToggle: () => dispatch(AC.modalToggle()),
 })
 
-export default connect(MSTP, MDTP)(App);
+const MP = (state, dispatch) => ({
+  setQuestion: () => dispatch(AC.setQuestion(state.settings.names))
+})
+
+export default connect(MSTP, MDTP, MP)(App);

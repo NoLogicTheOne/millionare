@@ -3,23 +3,19 @@ import { connect } from 'react-redux'
 import { Icon, Modal, Header, Button, Checkbox } from 'semantic-ui-react'
 
 import { default as AC } from "../actionCreators"
-// Codexes must be in states perhaps
-// Or in state we need store only names, Codexes got by requests
-import { Codexes } from '../middleware'
 
 function ModalSetting(props) {
     let { fullNames, names, modalOpen } = props
     let { modalToggle, addName, deleteName } = props
     let { save, cancel, savingNames } = props
+    let { Codexes, setQuestion } = props 
     
     const getCodexesCheckboxes = () => {
-      
         return fullNames.map((currentName, idx) => (<>
           <Checkbox 
             key={idx} 
             label={Codexes[currentName].header}
             defaultChecked={(() => {
-              console.log(names.has(currentName))
               return savingNames.has(currentName)
             })()}
             onChange={e => {
@@ -42,12 +38,14 @@ function ModalSetting(props) {
         <Button color='red' onClick={e => {
           modalToggle()
           cancel()
+          
         }}>
           <Icon name='cancel' /> Отменить изменения
         </Button>
         <Button color='green' onClick={e => {
           modalToggle()
           save()
+          setQuestion()
         }}>
           <Icon name='checkmark' /> Сохранить
         </Button>
@@ -55,7 +53,10 @@ function ModalSetting(props) {
     </Modal>)
 }
 
-const MSTP = state => state.settings 
+const MSTP = state => ({
+  ...state.settings,
+  Codexes: state.question.Codexes
+})
 
 const MDTP = dispatch => ({
     modalToggle: () => dispatch(AC.modalToggle()),
@@ -63,6 +64,10 @@ const MDTP = dispatch => ({
     deleteName: name => dispatch(AC.deleteName(name)),
     save: () => dispatch(AC.saveChangeNames()),
     cancel: () => dispatch(AC.cancelChangeNames())
+})
+
+const MP = (state, dispatch) => ({
+  setQuestion: () => dispatch(AC.setQuestion(state.settings.names))
 })
 
 export default connect(MSTP, MDTP)(ModalSetting)

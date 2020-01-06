@@ -1,8 +1,7 @@
 const initialState = {
     "count_wins": 0,
     "count_loose": 0,
-    "invert": true,
-    "names": []
+    "invert": true
 }
 
 export default (state = initialState, action) => {

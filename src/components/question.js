@@ -2,8 +2,21 @@ import React, { useState } from 'react';
 import { Variant } from './variant';
 
 import "./question.css"
+import { connect } from 'react-redux';
+import {default as AC} from "../actionCreators"
 
-export function Question({invert, vars, rightVariant, rightIdx, next, articleNum, articleText}) {
+function Question(props) {
+    
+    let {
+        invert, 
+        vars, 
+        rightVariant,
+        rightIdx,
+        addCount,
+        setQuestion,
+        refreshInvert
+    } = props
+
     let variants = vars
     let rightArticle = "Статья " + rightVariant.articleNum
     let rightText = rightVariant.articleText
@@ -26,7 +39,9 @@ export function Question({invert, vars, rightVariant, rightIdx, next, articleNum
         setAnswered(false)
         setReadyToAnswer(false)
         setShowed(false)
-        next(win)
+        addCount(win)
+        setQuestion()
+        refreshInvert()
     }
 
     const handleCheck = (e) => {
@@ -107,3 +122,30 @@ export function Question({invert, vars, rightVariant, rightIdx, next, articleNum
         }
     </>)
 }
+
+const MSTP = state => {
+    return ({
+        ...state.question.question,
+        names: state.settings.names,
+        invert: state.main.invert
+    })
+}
+
+const MDTP = dispatch => ({
+    dispatch,
+    refreshInvert: () => dispatch(AC.refreshInvert()),
+    addCount: isWin => dispatch(AC.addCount(isWin)),
+})
+
+const MP = (state, dispatchProps) => {
+    let { names } = state
+    let { dispatch } = dispatchProps
+    
+    return ({
+        ...state,
+        ...dispatchProps,
+        setQuestion: () => dispatch(AC.setQuestion(names))
+    })
+}
+
+export default connect(MSTP, MDTP, MP)(Question)
