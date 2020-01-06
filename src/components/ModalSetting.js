@@ -10,16 +10,20 @@ import { Codexes } from '../middleware'
 function ModalSetting(props) {
     let { fullNames, names, modalOpen } = props
     let { modalToggle, addName, deleteName } = props
+    let { save, cancel, savingNames } = props
     
     const getCodexesCheckboxes = () => {
       
-        return fullNames.map(currentName => (<>
+        return fullNames.map((currentName, idx) => (<>
           <Checkbox 
-            key={new Date()} 
+            key={idx} 
             label={Codexes[currentName].header}
-            checked={names.has(currentName)}
-            onClick={e => {
-              if(names.has(currentName)){
+            defaultChecked={(() => {
+              console.log(names.has(currentName))
+              return savingNames.has(currentName)
+            })()}
+            onChange={e => {
+              if(savingNames.has(currentName)){
                 deleteName(currentName)
               } else {
                 addName(currentName)
@@ -35,7 +39,16 @@ function ModalSetting(props) {
         {getCodexesCheckboxes()}
       </Modal.Content>
       <Modal.Actions>
-        <Button color='green' onClick={modalToggle}>
+        <Button color='red' onClick={e => {
+          modalToggle()
+          cancel()
+        }}>
+          <Icon name='cancel' /> Отменить изменения
+        </Button>
+        <Button color='green' onClick={e => {
+          modalToggle()
+          save()
+        }}>
           <Icon name='checkmark' /> Сохранить
         </Button>
       </Modal.Actions>
@@ -47,7 +60,9 @@ const MSTP = state => state.settings
 const MDTP = dispatch => ({
     modalToggle: () => dispatch(AC.modalToggle()),
     addName: name => dispatch(AC.addName(name)),
-    deleteName: name => dispatch(AC.deleteName(name))
+    deleteName: name => dispatch(AC.deleteName(name)),
+    save: () => dispatch(AC.saveChangeNames()),
+    cancel: () => dispatch(AC.cancelChangeNames())
 })
 
 export default connect(MSTP, MDTP)(ModalSetting)
