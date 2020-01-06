@@ -38,11 +38,19 @@ const MSTP = state => ({
 }) 
 
 const MDTP = dispatch => ({
+  dispatch,
   modalToggle: () => dispatch(AC.modalToggle()),
 })
 
-const MP = (state, dispatch) => ({
-  setQuestion: () => dispatch(AC.setQuestion(state.settings.names))
-})
+const MP = (state, dispatchProps) => {
+  let { names } = state
+  let { dispatch } = dispatchProps
+  
+  return ({
+      ...state,
+      ...dispatchProps,
+      setQuestion: () => dispatch(AC.setQuestion(names))
+  })
+}
 
 export default connect(MSTP, MDTP, MP)(App);
