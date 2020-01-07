@@ -1,4 +1,10 @@
+const APPS = [
+    "CodexesGame",
+    "MargaFight"
+]
+
 const initialState = {
+    app: APPS[0],
     modalOpen: true,
     names: new Set([]), //keep state value
     savingNames: new Set([]), //save for cancel-function
@@ -11,6 +17,12 @@ export default (state = initialState, action) => {
     let { savingNames } = state
 
     switch(action.type){
+        case "CHANGE_APP":
+            let app = state.app == "CodexesGame" ? "MargaFight" : "CodexesGame" 
+            return {
+                ...state,
+                app
+            }
         case "MODAL_TOGGLE":
             return {
                 ...state,

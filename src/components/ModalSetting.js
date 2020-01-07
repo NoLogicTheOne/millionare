@@ -5,6 +5,7 @@ import { Icon, Modal, Header, Button, Checkbox, Radio } from 'semantic-ui-react'
 import { default as AC } from "../actionCreators"
 
 function ModalSetting(props) {
+    let { changeApp, app } = props
     let { fullNames, modalOpen } = props
     let { modalToggle, addName, deleteName } = props
     let { save, cancel, names } = props
@@ -15,13 +16,15 @@ function ModalSetting(props) {
         <Radio
           label="MargaFight"
           name="chooseApp"
-          onClick={e=>e}
+          checked={app == "MargaFight"}
+          onClick={changeApp}
           style={{display: "block"}}>
         </Radio>
         <Radio
           label="CodexesGame"
           name="chooseApp"
-          onClick={e=>e}>
+          checked={ app == "CodexesGame" }
+          onClick={changeApp}>
         </Radio>
       </>)
     }
@@ -76,6 +79,7 @@ const MSTP = state => ({
 
 const MDTP = dispatch => ({
     dispatch: dispatch,
+    changeApp: () => dispatch(AC.changeApp()),
     modalToggle: () => dispatch(AC.modalToggle()),
     addName: name => dispatch(AC.addName(name)),
     deleteName: name => dispatch(AC.deleteName(name)),
