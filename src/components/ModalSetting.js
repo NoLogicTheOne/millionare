@@ -1,25 +1,39 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Icon, Modal, Header, Button, Checkbox } from 'semantic-ui-react'
+import { Icon, Modal, Header, Button, Checkbox, Radio } from 'semantic-ui-react'
 
 import { default as AC } from "../actionCreators"
 
 function ModalSetting(props) {
-    let { fullNames, names, modalOpen } = props
+    let { fullNames, modalOpen } = props
     let { modalToggle, addName, deleteName } = props
-    let { save, cancel, savingNames } = props
+    let { save, cancel, names } = props
     let { Codexes, setQuestion } = props 
     
+    const applicationToggler = () => {
+      return (<>
+        <Radio
+          label="MargaFight"
+          name="chooseApp"
+          onClick={e=>e}
+          style={{display: "block"}}>
+        </Radio>
+        <Radio
+          label="CodexesGame"
+          name="chooseApp"
+          onClick={e=>e}>
+        </Radio>
+      </>)
+    }
+
     const getCodexesCheckboxes = () => {
         return fullNames.map((currentName, idx) => (<>
           <Checkbox 
             key={idx} 
             label={Codexes[currentName].header}
-            defaultChecked={(() => {
-              return savingNames.has(currentName)
-            })()}
+            defaultChecked={names.has(currentName)}
             onChange={e => {
-              if(savingNames.has(currentName)){
+              if(names.has(currentName)){
                 deleteName(currentName)
               } else {
                 addName(currentName)
@@ -32,13 +46,15 @@ function ModalSetting(props) {
     return (<Modal open={modalOpen}>
       <Header icon='archive' content='Настройте выдачу вопросов' />
       <Modal.Content>
+        {applicationToggler()}
+      </Modal.Content>
+      <Modal.Content>
         {getCodexesCheckboxes()}
       </Modal.Content>
       <Modal.Actions>
         <Button color='red' onClick={e => {
           modalToggle()
           cancel()
-          
         }}>
           <Icon name='cancel' /> Отменить изменения
         </Button>

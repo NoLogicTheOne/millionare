@@ -18,10 +18,16 @@ export default (state = initialState, action) => {
             }
         case "DELETE_NAME":
             names.delete(name)
-            return state
+            return {
+                ...state,
+                names
+            }
         case "ADD_NAME":
             names.add(name)
-            return state
+            return {
+                ...state,
+                names
+            }
         case "SAVE_CHANGE_NAMES":
             return {
                 ...state,

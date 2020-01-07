@@ -11,10 +11,9 @@ import './App.css';
 
 function App(props) {
   // I know about destructurisation
-  let { invert, refreshInvert } = props
-  let { count_wins, count_loose, addCount } = props
+  let { invert } = props
+  let { count_wins, count_loose } = props
   let { modalToggle } = props
-  let { names, setQuestion } = props 
 
   return (
     <div className="App">
