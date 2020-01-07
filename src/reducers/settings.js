@@ -4,7 +4,7 @@ const APPS = [
 ]
 
 const initialState = {
-    app: APPS[0],
+    app: localStorage.getItem("app") || APPS[0],
     modalOpen: true,
     names: new Set([]), //keep state value
     savingNames: new Set([]), //save for cancel-function
@@ -41,6 +41,7 @@ export default (state = initialState, action) => {
                 names
             }
         case "SAVE_CHANGE_NAMES":
+            localStorage.setItem("app", state.app)
             return {
                 ...state,
                 savingNames: names
