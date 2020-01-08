@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Icon, Modal, Header, Button, Checkbox, Radio } from 'semantic-ui-react'
+import { Link } from "react-router-dom"  
 
 import { default as AC } from "../actionCreators"
 
@@ -14,16 +15,16 @@ function ModalSetting(props) {
     const applicationToggler = () => {
       return (<>
         <Radio
-          label="MargaFight"
+          label="Markup vs Margin"
           name="chooseApp"
-          checked={app == "MargaFight"}
+          checked={app == "marga"}
           onClick={changeApp}
           style={{display: "block"}}>
         </Radio>
         <Radio
           label="CodexesGame"
           name="chooseApp"
-          checked={ app == "CodexesGame" }
+          checked={ app == "codexes" }
           onClick={changeApp}>
         </Radio>
       </>)
@@ -61,13 +62,15 @@ function ModalSetting(props) {
         }}>
           <Icon name='cancel' /> Отменить изменения
         </Button>
-        <Button color='green' onClick={e => {
-          modalToggle()
-          save()
-          setQuestion()
-        }}>
+        <Link to={"/" + app}>
+          <Button color='green' onClick={e => {
+            modalToggle()
+            save()
+            setQuestion()
+          }}>
           <Icon name='checkmark' /> Сохранить
-        </Button>
+          </Button>
+        </Link>
       </Modal.Actions>
     </Modal>)
 }

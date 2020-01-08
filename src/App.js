@@ -2,6 +2,7 @@ import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 
 import {ChooseGame} from "./ChooseGame"
+import {Marga} from "./Marga"
 import CodexesGame from "./CodexesGame"
 
 import 'semantic-ui-css/semantic.min.css';
@@ -12,7 +13,7 @@ function App() {
     <Switch>
       <Route exact path="/" component={ChooseGame}/>
       <Route path="/codexes" component={CodexesGame}/>
-      <Route path="/marga" component={ChooseGame}/>
+      <Route path="/marga" component={Marga}/>
     </Switch>
   </>);
 }
