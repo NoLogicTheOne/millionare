@@ -1,6 +1,6 @@
 const APPS = [
     "CodexesGame",
-    "MargaFight"
+    "Markup vs Margin"
 ]
 
 const initialState = {
@@ -18,7 +18,7 @@ export default (state = initialState, action) => {
 
     switch(action.type){
         case "CHANGE_APP":
-            let app = state.app == "CodexesGame" ? "MargaFight" : "CodexesGame" 
+            let app = state.app == "CodexesGame" ? "Markup vs Margin" : "CodexesGame" 
             return {
                 ...state,
                 app

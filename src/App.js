@@ -1,55 +1,20 @@
-import React, {useState} from 'react'
-import { Icon } from 'semantic-ui-react'
-import { connect } from "react-redux"
+import React from 'react'
+import { Switch, Route } from 'react-router-dom'
 
-import Question from "./components/question"
-import { default as AC} from "./actionCreators"
-import { default as ModalSetting } from './components/ModalSetting'
+import {ChooseGame} from "./ChooseGame"
+import CodexesGame from "./CodexesGame"
 
 import 'semantic-ui-css/semantic.min.css';
 import './App.css';
 
-function App(props) {
-  // I know about destructurisation
-  let { invert } = props
-  let { count_wins, count_loose } = props
-  let { modalToggle } = props
-
-  return (
-    <div className="App">
-      <header className="App-header">
-        <h2>Появился УК РФ</h2>
-        <Icon name="settings" size="big" onClick={modalToggle}/> 
-        <ModalSetting />
-      </header>
-      <section>
-        <h3>Текущий счет: {count_wins} - {count_loose}</h3>
-      </section>
-      <Question invert={invert}/>
-
-    </div>
-  );
+function App() {
+  return (<>
+    <Switch>
+      <Route exact path="/" component={ChooseGame}/>
+      <Route path="/codexes" component={CodexesGame}/>
+      <Route path="/marga" component={ChooseGame}/>
+    </Switch>
+  </>);
 }
 
-const MSTP = state => ({
-  ...state.main,
-  names: state.settings.names
-}) 
-
-const MDTP = dispatch => ({
-  dispatch,
-  modalToggle: () => dispatch(AC.modalToggle()),
-})
-
-const MP = (state, dispatchProps) => {
-  let { names } = state
-  let { dispatch } = dispatchProps
-  
-  return ({
-      ...state,
-      ...dispatchProps,
-      setQuestion: () => dispatch(AC.setQuestion(names))
-  })
-}
-
-export default connect(MSTP, MDTP, MP)(App);
+export default App;
