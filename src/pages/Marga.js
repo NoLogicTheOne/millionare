@@ -9,29 +9,35 @@ const Marga = () => {
     let [markup, setMarkup] = useState(storageMarkup)
 
     const update = (name, value) => {
-        if(typeof +value !== "number") return
+        let val = format(value)
         if(name === "margin"){
-            setMargin(+value)
+            setMargin(val)
         } else {
-            setMarkup(+value)
+            setMarkup(val)
         }
-        localStorage.setItem(name, +value)
+        localStorage.setItem(name, val)
     }
 
-    const format = num => Math.round(num)
+    const format = num => new String(Math.round(num)).replace(/^0+/, '')
 
     const updateMargin = markup => {
-        update("margin", format(markup * 100 / (100 + markup)))
+        let newValue = markup * 100 / (100 + +markup)
+        console.log(markup ," - ", newValue)
+        update("margin", newValue)
     }
-    const updateMarkup = margin => update("markup", format(margin * 100 / (100 - margin)))
+    const updateMarkup = margin => {
+        let newValue = margin * 100 / (-margin + 100)
+        update("markup", newValue)
+    }
 
     const handleChange = name => e => {
         let value = e.target.value
         update(name, value)
         if(name === "margin"){
-            updateMarkup(margin)
+            updateMarkup(value)
         } else {
-            updateMargin(markup)
+            console.log(value)
+            updateMargin(value)
         }
     } 
 
@@ -52,13 +58,13 @@ const Marga = () => {
                 icon: 'cart',
                 content: 'Markup',
             }}
-            type="number"
+            role="number"
             min="0"
             actionPosition='left'
             value={format(markup)}
             onChange={handleChange("markup")}
             onBlur={handleChange("markup")}
-            onFocus={e=>update("markup", "")}
+            onFocus={e=>update("markup", 0)}
         />
         <br />
         <Input fluid
@@ -75,7 +81,7 @@ const Marga = () => {
             value={format(margin)}
             onChange={handleChange("margin")}
             onBlur={handleChange("margin")}
-            onFocus={e=>update("margin", "")}
+            onFocus={e=>update("margin", 0)}
         />
     </>)
 }
