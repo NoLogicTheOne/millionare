@@ -1,9 +1,9 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 
-import {ChooseGame} from "./ChooseGame"
-import {Marga} from "./Marga"
-import CodexesGame from "./CodexesGame"
+import {ChooseGame} from "./pages/ChooseGame"
+import {Marga} from "./pages/Marga"
+import CodexesGame from "./pages/CodexesGame"
 
 import 'semantic-ui-css/semantic.min.css';
 import './App.css';

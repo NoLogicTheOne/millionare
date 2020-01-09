@@ -2,12 +2,10 @@ import React from 'react'
 import { Icon } from 'semantic-ui-react'
 import { connect } from "react-redux"
 
-import Question from "./components/question"
-import { default as AC} from "./actionCreators"
-import { default as ModalSetting } from './components/ModalSetting'
+import Question from "../components/question"
+import { default as AC} from "../actionCreators"
+import { default as ModalSetting } from '../components/ModalSetting'
 
-import 'semantic-ui-css/semantic.min.css';
-import './App.css';
 
 function CodexesGame(props) {
   // I know about destructurisation
