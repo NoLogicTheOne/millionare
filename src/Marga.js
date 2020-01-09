@@ -1,16 +1,15 @@
 import React, { useState } from "react"
-import { Input } from "semantic-ui-react"
+import { Input, Header, Icon } from "semantic-ui-react"
 
 const Marga = () => {
-    let storageMarkup = localStorage.getItem("markup") || 0
-    let storageMargin = localStorage.getItem("margin") || 0
+    let storageMarkup = localStorage.getItem("markup") || ""
+    let storageMargin = localStorage.getItem("margin") || ""
     
     let [margin, setMargin] = useState(storageMargin)
     let [markup, setMarkup] = useState(storageMarkup)
 
     const update = (name, value) => {
         if(typeof +value !== "number") return
-        console.log(name, " - ", value)
         if(name === "margin"){
             setMargin(+value)
         } else {
@@ -22,13 +21,13 @@ const Marga = () => {
     const format = num => Math.round(num)
 
     const updateMargin = markup => {
-        console.log(markup)
         update("margin", format(markup * 100 / (100 + markup)))
     }
     const updateMarkup = margin => update("markup", format(margin * 100 / (100 - margin)))
 
     const handleChange = name => e => {
-        update(name, e.target.value)
+        let value = e.target.value
+        update(name, value)
         if(name === "margin"){
             updateMarkup(margin)
         } else {
@@ -37,8 +36,16 @@ const Marga = () => {
     } 
 
     return (<>
-        
-        <Input
+        <Header as='h1' icon textAlign="center">
+            <Icon name='settings' />
+            Markup vs. Margin
+            <Header.Subheader>
+            Просто вводи числа, любимая женушка!
+            </Header.Subheader>
+        </Header>
+        <br/>
+        <br/>
+        <Input fluid
             action={{
                 color: 'teal',
                 labelPosition: 'left',
@@ -50,10 +57,11 @@ const Marga = () => {
             actionPosition='left'
             value={format(markup)}
             onChange={handleChange("markup")}
+            onBlur={handleChange("markup")}
+            onFocus={e=>update("markup", "")}
         />
         <br />
-        <br />
-        <Input
+        <Input fluid
             action={{
                 color: 'teal',
                 labelPosition: 'left',
@@ -66,6 +74,8 @@ const Marga = () => {
             max="100"
             value={format(margin)}
             onChange={handleChange("margin")}
+            onBlur={handleChange("margin")}
+            onFocus={e=>update("margin", "")}
         />
     </>)
 }
