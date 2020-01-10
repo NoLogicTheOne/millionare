@@ -21,12 +21,11 @@ const Marga = () => {
     const format = num => new String(Math.round(num)).replace(/^0+/, '')
 
     const updateMargin = markup => {
-        let newValue = markup * 100 / (100 + +markup)
-        console.log(markup ," - ", newValue)
+        let newValue = markup * 100 / (100 + Number(markup))
         update("margin", newValue)
     }
     const updateMarkup = margin => {
-        let newValue = margin * 100 / (-margin + 100)
+        let newValue = margin * 100 / (100 - margin)
         update("markup", newValue)
     }
 
@@ -36,12 +35,12 @@ const Marga = () => {
         if(name === "margin"){
             updateMarkup(value)
         } else {
-            console.log(value)
             updateMargin(value)
         }
     } 
 
     return (<>
+        <br/>
         <Header as='h1' icon textAlign="center">
             <Icon name='settings' />
             Markup vs. Margin
@@ -57,13 +56,14 @@ const Marga = () => {
                 labelPosition: 'left',
                 icon: 'cart',
                 content: 'Markup',
+                style: {fontSize: "1.4rem"}
             }}
+            style={{fontSize: "2rem"}}
             role="number"
             min="0"
             actionPosition='left'
             value={format(markup)}
             onChange={handleChange("markup")}
-            onBlur={handleChange("markup")}
             onFocus={e=>update("markup", 0)}
         />
         <br />
@@ -72,20 +72,19 @@ const Marga = () => {
                 color: 'teal',
                 labelPosition: 'left',
                 icon: 'cart',
-                content: 'Margin'
+                content: 'Margin',
+                style: {fontSize: "1.4rem"}
             }}
+            style={{fontSize: "2rem"}}
             actionPosition='left'
             type="number"
             min="0"
             max="100"
             value={format(margin)}
             onChange={handleChange("margin")}
-            onBlur={handleChange("margin")}
             onFocus={e=>update("margin", 0)}
         />
     </>)
 }
-
-
 
 export {Marga}

@@ -9,15 +9,13 @@ import {connect} from "react-redux"
 import 'semantic-ui-css/semantic.min.css';
 import './App.css';
 
-function App({app = ""}) {
-  let defaultApp = "/" + app
-  
+function App({app = "/choose"}) {
   return (<>
     <Switch>
-      {/* <Route exact path="/" component={ChooseGame}/> */}
+      <Route path="/choose" component={ChooseGame}/>
       <Route path="/codexes" component={CodexesGame}/>
       <Route path="/marga" component={Marga}/>
-      <Redirect from="/" to={defaultApp}/>
+      <Redirect from="/" to={"/" + app}/>
     </Switch>
   </>);
 }

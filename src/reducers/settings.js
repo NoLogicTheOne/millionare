@@ -1,10 +1,5 @@
-const APPS = [
-    "codexes",
-    "marga"
-]
-
 const initialState = {
-    app: localStorage.getItem("app") || "",
+    app: localStorage.getItem("app") || "choose",
     modalOpen: true,
     names: new Set([]), //keep state value
     savingNames: new Set([]), //save for cancel-function
