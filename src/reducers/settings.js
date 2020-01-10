@@ -4,7 +4,7 @@ const APPS = [
 ]
 
 const initialState = {
-    app: localStorage.getItem("app") || APPS[0],
+    app: localStorage.getItem("app") || "",
     modalOpen: true,
     names: new Set([]), //keep state value
     savingNames: new Set([]), //save for cancel-function
