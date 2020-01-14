@@ -1,5 +1,6 @@
 {
   "id": "UK",
+  "isCodex": true,
   "header": "Уголовный кодекс",
   "shortName": "УК РФ",
   "articles": {

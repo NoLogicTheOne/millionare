@@ -1,8 +1,11 @@
-import { default as Codexes } from "../codexes"
+import { default as Data } from "../codexes"
+
+const Codexes = Object.keys(Data)
+  .reduce((a, c) => Data[c].isCodex == true ? {...a, [c]: Data[c]} : a, {})
 
 const initialState = {
   Codexes,
-  question: getQuestion(undefined, Codexes)
+  question: getQuestion([], Codexes)
 }
 
 const questionReducer = (state = initialState, action) => {
@@ -46,6 +49,7 @@ function getQuestion(names = new Set([])){
 
   const getRandomCodex = () => {
     let keys = names.size ? [...names] : Object.keys(Codexes)
+    
     let len = keys.length
     let randomIdx = (Math.random() * len) | 0
     

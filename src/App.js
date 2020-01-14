@@ -3,6 +3,7 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 
 import {ChooseGame} from "./pages/ChooseGame"
 import {Marga} from "./pages/Marga"
+import Cascading from "./pages/Cascading"
 import CodexesGame from "./pages/CodexesGame"
 import {connect} from "react-redux"
 
@@ -15,6 +16,7 @@ function App({app = "/choose"}) {
       <Route path="/choose" component={ChooseGame}/>
       <Route path="/codexes" component={CodexesGame}/>
       <Route path="/marga" component={Marga}/>
+      <Route path="/cascading" component={Cascading}/>
       <Redirect from="/" to={"/" + app}/>
     </Switch>
   </>);

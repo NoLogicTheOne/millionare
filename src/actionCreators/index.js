@@ -7,6 +7,8 @@ import {default as saveChangeNames} from "./saveChangeNames"
 import {default as cancelChangeNames} from "./cancelChangeNames"
 import {default as setQuestion} from "./setQuestion"
 import {default as changeApp} from "./changeApp"
+import {default as toDeep} from "./toDeep"
+import {default as toHight} from "./toHight"
 
 export default {
     refreshInvert,
@@ -17,5 +19,7 @@ export default {
     saveChangeNames,
     cancelChangeNames,
     setQuestion,
-    changeApp
+    changeApp,
+    toDeep,
+    toHight
 }

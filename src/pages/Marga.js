@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { Input, Header, Icon } from "semantic-ui-react"
+import { Link } from "react-router-dom"
 
 import "./marga.css"
 
@@ -45,7 +46,9 @@ const Marga = () => {
     return (<>
         <br/>
         <Header as={iconSize} icon textAlign="center">
-            <Icon name='settings' size="small" className={"marga__icon-small"}/>
+            <Link to="/cascading">
+                <Icon name='settings' size="small" className={"marga__icon-small"}/>
+            </Link>
             Markup vs. Margin
             <Header.Subheader>
             Просто вводи числа, любимая женушка!
