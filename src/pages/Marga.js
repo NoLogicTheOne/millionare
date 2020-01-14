@@ -1,12 +1,15 @@
 import React, { useState } from "react"
 import { Input, Header, Icon } from "semantic-ui-react"
 
+import "./marga.css"
+
 const Marga = () => {
     let storageMarkup = localStorage.getItem("markup") || ""
     let storageMargin = localStorage.getItem("margin") || ""
     
     let [margin, setMargin] = useState(storageMargin)
     let [markup, setMarkup] = useState(storageMarkup)
+    let [iconSize, setIconSize] = useState("h1")
 
     const update = (name, value) => {
         let val = format(value)
@@ -41,8 +44,8 @@ const Marga = () => {
 
     return (<>
         <br/>
-        <Header as='h1' icon textAlign="center">
-            <Icon name='settings' />
+        <Header as={iconSize} icon textAlign="center">
+            <Icon name='settings' size="small" className={"marga__icon-small"}/>
             Markup vs. Margin
             <Header.Subheader>
             Просто вводи числа, любимая женушка!
@@ -59,12 +62,18 @@ const Marga = () => {
                 style: {fontSize: "1.4rem"}
             }}
             style={{fontSize: "2rem"}}
-            role="number"
+            type="number"
             min="0"
             actionPosition='left'
             value={format(markup)}
             onChange={handleChange("markup")}
-            onFocus={e=>update("markup", 0)}
+            onFocus={e=> {
+                setIconSize("h4")
+                update("markup", 0)
+            }}
+            onBlur={e=> {
+                setIconSize("h2")
+            }}
         />
         <br />
         <Input fluid
@@ -82,7 +91,13 @@ const Marga = () => {
             max="100"
             value={format(margin)}
             onChange={handleChange("margin")}
-            onFocus={e=>update("margin", 0)}
+            onFocus={e=> {
+                setIconSize("h4")
+                update("margin", 0)
+            }}
+            onBlur={e=> {
+                setIconSize("h2")
+            }}
         />
     </>)
 }
