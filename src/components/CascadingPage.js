@@ -5,7 +5,7 @@ import { connect } from "react-redux"
 
 const CascadingPage = (props) => {
     const {base} = props
-    const {parentBase} = props
+    const {parentBase, breadcrumbs} = props
     const {toDeep, toHight} = props
 
     const {items = []} = base
@@ -17,9 +17,11 @@ const CascadingPage = (props) => {
     )
     const renderBack = () => (<Button content="Go back" icon='left arrow' labelPosition='left' onClick={() => toHight()}/>
     )
+    const renderBreadcrumbs = breadcrumbs => 
+        breadcrumbs.reduce((acc, curr) => acc ? acc + " > " + curr : curr, "")
 
     return (<>
-        <h3>{base.name}</h3>
+        <h3>{renderBreadcrumbs(breadcrumbs)}</h3>
         {items.map((c,i) => renderItem(c, i))}
         {parentBase.length ? renderBack() : null}
     </>)

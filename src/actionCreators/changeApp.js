@@ -1,3 +1,4 @@
-export default () => ({
-    type: "CHANGE_APP"
+export default name => ({
+    type: "CHANGE_APP",
+    name
 })

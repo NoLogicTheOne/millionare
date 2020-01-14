@@ -15,17 +15,24 @@ function ModalSetting(props) {
     const applicationToggler = () => {
       return (<>
         <Radio
+          label="Cascading"
+          name="chooseApp"
+          checked={app == "cascading"}
+          onClick={e => changeApp("cascading")}
+          style={{display: "block"}}>
+        </Radio>
+        <Radio
           label="Markup vs Margin"
           name="chooseApp"
           checked={app == "marga"}
-          onClick={changeApp}
+          onClick={e => changeApp("marga")}
           style={{display: "block"}}>
         </Radio>
         <Radio
           label="CodexesGame"
           name="chooseApp"
           checked={ app == "codexes" }
-          onClick={changeApp}>
+          onClick={e => changeApp("codexes")}>
         </Radio>
       </>)
     }
@@ -82,7 +89,7 @@ const MSTP = state => ({
 
 const MDTP = dispatch => ({
     dispatch: dispatch,
-    changeApp: () => dispatch(AC.changeApp()),
+    changeApp: app => dispatch(AC.changeApp(app)),
     modalToggle: () => dispatch(AC.modalToggle()),
     addName: name => dispatch(AC.addName(name)),
     deleteName: name => dispatch(AC.deleteName(name)),

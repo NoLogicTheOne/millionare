@@ -12,11 +12,10 @@ export default (state = initialState, action) => {
     let { savingNames } = state
 
     switch(action.type){
-        case "CHANGE_APP":
-            let app = state.app == "codexes" ? "marga" : "codexes" 
+        case "CHANGE_APP": 
             return {
                 ...state,
-                app
+                app: name
             }
         case "MODAL_TOGGLE":
             return {
