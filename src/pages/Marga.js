@@ -2,6 +2,8 @@ import React, { useState } from "react"
 import { Input, Header, Icon } from "semantic-ui-react"
 import { Link } from "react-router-dom"
 
+import {updateMarkup, updateMargin} from "../utils/marga"
+
 const Marga = () => {
     let storageMarkup = localStorage.getItem("markup") || ""
     let storageMargin = localStorage.getItem("margin") || ""
@@ -22,22 +24,13 @@ const Marga = () => {
 
     const format = num => String(Math.round(num)).replace(/^0+/, '')
 
-    const updateMargin = markup => {
-        let newValue = markup * 100 / (100 + Number(markup))
-        update("margin", newValue)
-    }
-    const updateMarkup = margin => {
-        let newValue = margin * 100 / (100 - margin)
-        update("markup", newValue)
-    }
-
     const handleChange = name => e => {
         let value = e.target.value
         update(name, value)
         if(name === "margin"){
-            updateMarkup(value)
+            update("markup", updateMarkup(value))
         } else {
-            updateMargin(value)
+            update("margin", updateMargin(value))
         }
     } 
 
