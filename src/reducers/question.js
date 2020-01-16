@@ -1,7 +1,7 @@
 import { default as Data } from "../codexes"
 
 const Codexes = Object.keys(Data)
-  .reduce((a, c) => Data[c].isCodex == true ? {...a, [c]: Data[c]} : a, {})
+  .reduce((a, c) => Data[c].isCodex === true ? {...a, [c]: Data[c]} : a, {})
 
 const initialState = {
   Codexes,

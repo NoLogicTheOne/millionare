@@ -17,21 +17,21 @@ function ModalSetting(props) {
         <Radio
           label="Cascading"
           name="chooseApp"
-          checked={app == "cascading"}
+          checked={app === "cascading"}
           onClick={e => changeApp("cascading")}
           style={{display: "block"}}>
         </Radio>
         <Radio
           label="Markup vs Margin"
           name="chooseApp"
-          checked={app == "marga"}
+          checked={app === "marga"}
           onClick={e => changeApp("marga")}
           style={{display: "block"}}>
         </Radio>
         <Radio
           label="CodexesGame"
           name="chooseApp"
-          checked={ app == "codexes" }
+          checked={ app === "codexes" }
           onClick={e => changeApp("codexes")}>
         </Radio>
       </>)
