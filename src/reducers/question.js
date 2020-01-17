@@ -1,4 +1,6 @@
 import { default as Data } from "../codexes"
+import { default as getRandomElement } from "../utils/getRandomElement"
+import random from "../utils/random"
 
 const Codexes = Object.keys(Data)
   .reduce((a, c) => Data[c].isCodex === true ? {...a, [c]: Data[c]} : a, {})
@@ -31,10 +33,8 @@ function getRandomArticle(codexName, idx){
     }
   }
 
-  let keys = Object.keys(codex.articles)
-  let len = keys.length
-  let randomIdx = keys[(len * Math.random()) | 0]
-
+  let randomIdx = getRandomElement(codex.articles)
+  
   return {
     article: codex.articles[randomIdx],
     idx: randomIdx + " " + codex.shortName,
@@ -50,8 +50,7 @@ function getQuestion(names = new Set([])){
   const getRandomCodex = () => {
     let keys = names.size ? [...names] : Object.keys(Codexes)
     
-    let len = keys.length
-    let randomIdx = (Math.random() * len) | 0
+    let randomIdx = getRandomElement(names)
     
     return keys[randomIdx]
   }
@@ -65,7 +64,7 @@ function getQuestion(names = new Set([])){
     color: 'transparent'
   })
 
-  let rightVariant = (Math.random() * 4) | 0
+  let rightVariant = random(0, 3)
   result.vars[rightVariant] = getVariant(getArticle(), true)
   result.rightVariant =  result.vars[rightVariant]
   result.rightIdx = rightVariant
