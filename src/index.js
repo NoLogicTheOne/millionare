@@ -4,6 +4,7 @@ import { Provider } from 'react-redux'
 import { createStore, applyMiddleware } from "redux"
 import logger from 'redux-logger'
 import { BrowserRouter } from "react-router-dom"
+import * as serviceWorker from './serviceWorker';
 
 import './index.css';
 import App from './App';
@@ -24,3 +25,5 @@ ReactDOM.render(
   </BrowserRouter>, 
   document.getElementById('root')
 )
+
+serviceWorker.unregister();

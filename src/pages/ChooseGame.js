@@ -17,6 +17,11 @@ const ChooseGame = () => {
                 <Button fluid positive>Codexes Game</Button>    
             </Link>
         </Segment>
+        <Segment>
+            <Link to="/cascading">
+                <Button fluid positive>Cascading</Button>    
+            </Link>
+        </Segment>
     </Modal>)
 }
 
