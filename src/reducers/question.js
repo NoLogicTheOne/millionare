@@ -1,5 +1,6 @@
 import { default as Data } from "../codexes"
-import { default as getRandomElement } from "../utils/getRandomElement"
+import { sample } from "lodash"
+
 import random from "../utils/random"
 
 const Codexes = Object.keys(Data)
@@ -33,7 +34,7 @@ function getRandomArticle(codexName, idx){
     }
   }
 
-  let randomIdx = getRandomElement(codex.articles)
+  let randomIdx = sample(Object.keys(codex.articles))
   
   return {
     article: codex.articles[randomIdx],
@@ -49,10 +50,7 @@ function getQuestion(names = new Set([])){
 
   const getRandomCodex = () => {
     let keys = names.size ? [...names] : Object.keys(Codexes)
-    
-    let randomIdx = getRandomElement(names)
-    
-    return keys[randomIdx]
+    return sample(keys)
   }
 
   const getArticle = idx => getRandomArticle(getRandomCodex(), idx)
