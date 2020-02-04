@@ -13,11 +13,12 @@ import './App.css';
 function App({app = "/choose"}) {
   return (<>
     <Switch>
-      <Route path="/choose" component={ChooseGame}/>
-      <Route path="/codexes" component={CodexesGame}/>
-      <Route path="/marga" component={Marga}/>
-      <Route path="/cascading" component={Cascading}/>
-      <Redirect from="/" to={"/" + app}/>
+      {/* for my sweety wife temporary solution for fastest work*/}
+      {/* <Route path="/choose" component={ChooseGame}/> */}
+      {/* <Route path="/codexes" component={CodexesGame}/> */}
+      <Route path="/" component={Marga}/>
+      {/* <Route path="/cascading" component={Cascading}/> */}
+      {/* <Redirect from="/" to={"/marga"}/> */}
     </Switch>
   </>);
 }
